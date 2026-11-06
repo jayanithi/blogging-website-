@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts | My Blog</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-1: #0f172a;
+            --bg-2: #111827;
+            --bg-3: #1e293b;
+            --card: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.14);
+            --text: #f8fafc;
+            --muted: #cbd5e1;
+            --accent: #8b5cf6;
+            --accent-2: #06b6d4;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(139, 92, 246, 0.28), transparent 30%),
+                radial-gradient(circle at top right, rgba(6, 182, 212, 0.22), transparent 28%),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+            overflow-x: hidden;
+        }
+
+        .blur-1,
+        .blur-2 {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 240px;
+            height: 240px;
+            background: rgba(139, 92, 246, 0.25);
+            top: 80px;
+            left: -60px;
+        }
+
+        .blur-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(6, 182, 212, 0.18);
+            bottom: 40px;
+            right: -80px;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(16px);
+            background: rgba(15, 23, 42, 0.35);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(59, 130, 246, 0.35);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: min(1200px, 90%);
+            margin: 0 auto;
+        }
+
+        .hero {
+            padding: 70px 0 30px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            backdrop-filter: blur(12px);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #c4b5fd, #67e8f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto 28px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: white;
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,0.14);
+            color: white;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(120px, 1fr));
+            gap: 16px;
+            margin: 30px auto 10px;
+            max-width: 760px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            padding: 22px;
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 16px;
+            margin: 60px 0 24px;
+            flex-wrap: wrap;
+        }
+
+        .section-head h2 {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .section-head p {
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding-bottom: 60px;
+        }
+
+        .post-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            padding: 26px;
+            min-height: 280px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+        }
+
+        .post-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.10), rgba(6, 182, 212, 0.06));
+            pointer-events: none;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .post-image-wrap {
+            width: 100%;
+            height: 220px;
+            border-radius: 22px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+            color: #e9d5ff;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .date {
+            color: #cbd5e1;
+            font-size: 0.82rem;
+        }
+
+        .post-card h3 {
+            font-size: 1.5rem;
+            line-height: 1.35;
+            margin-bottom: 14px;
+            font-weight: 800;
+        }
+
+        .post-card p {
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 0.97rem;
+            margin-bottom: 22px;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .author-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .read-more {
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        }
+
+        .empty-box {
+            text-align: center;
+            padding: 60px 24px;
+            border-radius: 28px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow);
+        }
+
+        .empty-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .empty-box p {
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 24px 8%;
+            text-align: center;
+            color: #cbd5e1;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 18px 5%;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blur-1"></div>
+    <div class="blur-2"></div>
+
+    <nav class="navbar">
+        <div class="logo">My<span>Blog</span></div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/posts/">Posts</a>
+            <!-- <a href="/admin/">Admin</a> -->
+            <a href="/create/" class="nav-btn">Create Post</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <div class="badge">✨ Premium Article Collection</div>
+            <h1>Explore <span>Beautiful Stories</span> & Powerful Ideas</h1>
+            <p>
+                Welcome to a premium blogging experience built with Django and MongoDB.
+                Discover thoughtful posts, creative insights, and content presented with a modern luxury interface.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/create/" class="btn-primary">Write New Post</a>
+                <a href="/" class="btn-secondary">Back to Home</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>{{ posts|length }}</h3>
+                    <p>Total Posts</p>
+                </div>
+                <div class="stat-card">
+                    <h3>24/7</h3>
+                    <p>Content Access</p>
+                </div>
+                <div class="stat-card">
+                    <h3>100%</h3>
+                    <p>Modern Design</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-head">
+            <div>
+                <h2>Latest Blog Posts</h2>
+                <p>
+                    Handpicked articles displayed in a premium card layout with soft glass effects,
+                    elegant spacing, and a modern editorial feel.
+                </p>
+            </div>
+        </div>
+
+        {% if posts %}
+        <section class="post-grid">
+            {% for post in posts %}
+            <article class="post-card">
+                <div class="card-content">
+
+                    {% if post.image %}
+                    <div class="post-image-wrap">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                    </div>
+                    {% endif %}
+
+                    <div class="post-top">
+                        <span class="tag">Featured Post</span>
+                        <span class="date">{{ post.created_at|date:"M d, Y" }}</span>
+                    </div>
+
+                    <h3>{{ post.title }}</h3>
+
+                    <p>{{ post.content|truncatechars:180 }}</p>
+
+                    <div class="post-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                {{ post.author.username|first|upper }}
+                            </div>
+                            <span>{{ post.author.username }}</span>
+                        </div>
+
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+        {% else %}
+        <div class="empty-box">
+            <h3>No Posts Yet</h3>
+            <p>
+                Unga blog-la innum posts add pannala. Create Post page-ku poi first premium post create pannunga.
+            </p>
+            <a href="/create/" class="btn-primary">Create First Post</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 MyBlog. Crafted with Django + MongoDB for a premium reading experience.</p>
+    </footer>
+
+</body>
+</html>

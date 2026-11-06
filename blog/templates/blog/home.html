@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-1: #0f172a;
+            --bg-2: #111827;
+            --accent: #8b5cf6;
+            --accent-2: #06b6d4;
+            --text: #f8fafc;
+            --muted: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(139,92,246,0.25), transparent),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            color: var(--text);
+        }
+
+        /* NAVBAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 8%;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav a {
+            margin-left: 20px;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #c4b5fd, #67e8f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* BUTTON */
+        .btn {
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* FEATURES */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+            gap: 20px;
+            padding: 60px 8%;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--muted);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            color: var(--muted);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">My<span>Blog</span></div>
+    <a href="/create/" class="btn">Create Post</a>
+    <div>
+        <a href="/">Home</a>
+        <a href="/posts/">Posts</a>
+        <!-- <a href="/admin/">Admin</a> -->
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>🔥 Welcome to <span>My Blog</span></h1>
+    <p>
+        Discover amazing articles, ideas, and creativity.
+        Built with Django + MongoDB for modern web experience.
+    </p>
+
+    <a href="/posts/" class="btn">Explore Posts</a>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+    <div class="card">
+        <h3>🚀 Fast & Modern</h3>
+        <p>Django powered backend with MongoDB database.</p>
+    </div>
+
+    <div class="card">
+        <h3>🎨 Premium UI</h3>
+        <p>Beautiful and clean design for best experience.</p>
+    </div>
+
+    <div class="card">
+        <h3>📚 Unlimited Posts</h3>
+        <p>Create and manage your blog posts easily.</p>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 My Blog | Built with ❤️ using Django</p>
+</footer>
+
+</body>
+</html>
